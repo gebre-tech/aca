@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -31,6 +30,7 @@
   background: var(--color-paper);
   color: var(--color-charcoal);
   scroll-behavior: smooth;
+  scroll-padding-top: 6.75rem;
 }
 
 * {
@@ -39,6 +39,11 @@
 
 body {
   margin: 0;
+}
+
+section[id],
+aside[id] {
+  scroll-margin-top: 6.75rem;
 }
 
 button,
@@ -524,6 +529,14 @@ summary:focus-visible {
   color: var(--color-forest-950);
 }
 
+.site-nav__link[aria-current='location'] {
+  color: var(--color-forest-900);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ochre-700);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35rem;
+}
+
 .site-nav__group {
   position: relative;
 }
@@ -646,6 +659,15 @@ summary:focus-visible {
   line-height: 1.7;
 }
 
+.site-footer__overline {
+  margin: 1.25rem 0 0;
+  color: #f2c47e;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .site-footer__contact {
   display: grid;
   gap: 0.45rem;
@@ -675,6 +697,11 @@ summary:focus-visible {
 }
 
 .site-footer__nav a:hover {
+  color: var(--color-white);
+  text-decoration-color: #f2c47e;
+}
+
+.site-footer__nav a[aria-current='location'] {
   color: var(--color-white);
   text-decoration-color: #f2c47e;
 }
@@ -823,6 +850,24 @@ summary:focus-visible {
   font-size: 0.9rem;
 }
 
+[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+.has-scroll-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition:
+    opacity 500ms ease,
+    transform 500ms ease;
+}
+
+.has-scroll-reveal [data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (max-width: 1100px) {
   .site-nav__link,
   .site-nav__summary {
@@ -967,6 +1012,15 @@ summary:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
+  .has-scroll-reveal [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
   *,
   *::before,
   *::after {

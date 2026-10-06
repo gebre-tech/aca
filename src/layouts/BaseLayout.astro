@@ -1,17 +1,28 @@
 ---
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { home } from '../data/home';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
+  noIndex?: boolean;
 }
 
 const {
   title = 'Africa Climate Actions PLC',
   description = 'Climate solutions for cleaner energy, productive agriculture, stronger businesses, and resilient communities across Africa.',
+  noIndex = false,
 } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Africa Climate Actions PLC',
+  url: Astro.site?.toString(),
+  description: home.document.positioningStatement,
+};
 ---
 
 <!doctype html>
@@ -21,8 +32,30 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f7f6f1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Africa Climate Actions PLC" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="en_US" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      />
+    </noscript>
+    {noIndex && <meta name="robots" content="noindex, follow" />}
+    <script type="application/ld+json" set:html={JSON.stringify(organization)} />
     <title>{title}</title>
   </head>
   <body>

@@ -4,12 +4,13 @@ interface Props {
   title: string;
   intro?: string;
   id?: string;
+  class?: string;
 }
 
-const { eyebrow, title, intro, id } = Astro.props;
+const { eyebrow, title, intro, id, class: className } = Astro.props;
 ---
 
-<header class="section-heading">
+<header class:list={['section-heading', className]}>
   <p class="section-heading__eyebrow">{eyebrow}</p>
   <h2 id={id} class="section-heading__title">{title}</h2>
   {intro && <p class="section-heading__intro">{intro}</p>}

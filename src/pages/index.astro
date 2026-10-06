@@ -30,12 +30,16 @@ const partnerMonograms = ['MoA', 'MoPD', 'WSU', 'ILRI', 'WB', 'UNDP', 'UNEP'] as
 <BaseLayout title="Africa Climate Actions PLC" description={home.document.description}>
   <section id="home" class="home-hero" aria-labelledby="home-heading">
     <div class="container home-hero__inner">
-      <div class="home-hero__content">
+      <div class="home-hero__content" data-reveal>
         <p class="home-hero__eyebrow">{home.label}</p>
         <h1 id="home-heading" class="home-hero__title">{home.heading}</h1>
         <div class="home-hero__intro">
           {home.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
         </div>
+        <p class="home-hero__positioning">
+          <strong>{home.document.positioningStatementLabel}</strong>
+          {' '}{home.document.positioningStatement}
+        </p>
         <div class="home-hero__actions">
           <Button href="#services" icon="arrow">Explore Our Services</Button>
           <Button href="/#contact" variant="outline">Contact Us</Button>
@@ -249,6 +253,11 @@ const partnerMonograms = ['MoA', 'MoPD', 'WSU', 'ILRI', 'WB', 'UNDP', 'UNEP'] as
       title={impact.heading}
       intro={impact.paragraphs[0]}
     />
+    <SectionHeading
+      eyebrow={impact.label}
+      title={impact.areasHeading}
+      class="impact-subheading"
+    />
     <div class="impact-grid">
       {impact.areas.map((area, index) => (
         <IconCard
@@ -279,6 +288,16 @@ const partnerMonograms = ['MoA', 'MoPD', 'WSU', 'ILRI', 'WB', 'UNDP', 'UNEP'] as
       intro={cta.paragraphs[0]}
     />
     <p class="contact-intro-secondary">{cta.paragraphs[1]}</p>
+    <div class="contact-quick-actions" aria-label={cta.label}>
+      {cta.actions.map((action, index) => (
+        <Button
+          href={['#services', '#projects', '#carbon-finance', '#contact'][index]}
+          variant={index === 0 ? 'primary' : 'outline'}
+        >
+          {action}
+        </Button>
+      ))}
+    </div>
     <div class="contact-layout">
       <form
         class="contact-form"
@@ -390,6 +409,20 @@ const partnerMonograms = ['MoA', 'MoPD', 'WSU', 'ILRI', 'WB', 'UNDP', 'UNEP'] as
 
   .home-hero__intro p:last-child {
     margin-bottom: 0;
+  }
+
+  .home-hero__positioning {
+    max-width: 44rem;
+    margin: 1rem 0 0;
+    border-left: 2px solid var(--color-ochre-800);
+    padding-left: 0.9rem;
+    color: var(--color-slate);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .home-hero__positioning strong {
+    color: var(--color-forest-950);
   }
 
   .home-hero__actions {
@@ -843,6 +876,11 @@ const partnerMonograms = ['MoA', 'MoPD', 'WSU', 'ILRI', 'WB', 'UNDP', 'UNEP'] as
     font-size: 1.05rem;
   }
 
+  .impact-subheading {
+    margin-top: 2.75rem;
+    margin-bottom: 1.5rem;
+  }
+
   .section--dark .section-heading__title {
     max-width: 52rem;
   }
@@ -870,6 +908,13 @@ const partnerMonograms = ['MoA', 'MoPD', 'WSU', 'ILRI', 'WB', 'UNDP', 'UNEP'] as
 
   .contact-layout {
     max-width: 54rem;
+  }
+
+  .contact-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin: 0 0 1.5rem;
   }
 
   .contact-form {

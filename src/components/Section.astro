@@ -14,7 +14,7 @@ const { id, tone = 'default', labelledBy, class: className } = Astro.props;
   class:list={['section', tone !== 'default' && `section--${tone}`, className]}
   aria-labelledby={labelledBy}
 >
-  <div class="container">
+  <div class="container" data-reveal>
     <slot />
   </div>
 </section>

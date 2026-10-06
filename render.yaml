@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: africa-climate-actions
+    runtime: static
+    branch: main
+    buildCommand: "npm ci && npm run build"
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0

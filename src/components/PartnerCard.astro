@@ -13,7 +13,9 @@ const { name, focus, monogram, id } = Astro.props;
 
 <Card class="partner-card" labelledBy={id}>
   <span class="partner-card__monogram" aria-hidden="true">{monogram}</span>
+  <span class="partner-card__field-label">Partner</span>
   <h3 id={id} class="partner-card__name">{name}</h3>
+  <p class="partner-card__field-label partner-card__focus-label">Collaboration Focus</p>
   <p class="partner-card__focus">{focus}</p>
 </Card>
 
@@ -48,8 +50,22 @@ const { name, focus, monogram, id } = Astro.props;
     line-height: 1.4;
   }
 
+  .partner-card__field-label {
+    display: block;
+    margin: 0 0 0.25rem;
+    color: var(--color-slate);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .partner-card__focus-label {
+    margin-top: 0.8rem;
+  }
+
   .partner-card__focus {
-    margin: 0.65rem 0 0;
+    margin: 0;
     color: var(--color-slate);
     line-height: 1.65;
   }
