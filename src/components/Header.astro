@@ -1,0 +1,92 @@
+---
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+
+const primaryLinks = [
+  { label: 'Home', href: '/#home' },
+  { label: 'About Us', href: '/#about' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Projects', href: '/#projects' },
+];
+
+const exploreLinks = [
+  { label: 'Featured Project', href: '/projects/biogas-forage-dairy/' },
+  { label: 'Digital MRV', href: '/#digital-mrv' },
+  { label: 'Carbon Markets and Climate Finance', href: '/#carbon-finance' },
+  { label: 'Climate Business Models', href: '/#business-models' },
+  { label: 'Partners', href: '/#partners' },
+  { label: 'Impact', href: '/#impact' },
+  { label: 'Why Africa Climate Actions', href: '/#why-us' },
+];
+---
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="/#home" aria-label="Africa Climate Actions PLC home">
+      <span class="brand__mark"><Icon name="climate" /></span>
+      <span class="brand__text">Africa Climate Actions PLC</span>
+    </a>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+      data-menu-toggle
+    >
+      <Icon name="menu" class="menu-toggle__open-icon" />
+      <Icon name="close" class="menu-toggle__close-icon" />
+    </button>
+    <nav id="primary-navigation" class="site-nav" aria-label="Main navigation" data-site-nav>
+      {primaryLinks.map((link) => <a class="site-nav__link" href={link.href}>{link.label}</a>)}
+      <details class="site-nav__group">
+        <summary class="site-nav__summary">
+          Explore <Icon name="chevron" class="site-nav__chevron" />
+        </summary>
+        <div class="site-nav__dropdown">
+          {exploreLinks.map((link) => <a class="site-nav__link" href={link.href}>{link.label}</a>)}
+        </div>
+      </details>
+      <Button href="/#contact" class="site-nav__contact" icon="arrow">Contact</Button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const navigation = document.querySelector<HTMLElement>('[data-site-nav]');
+  const exploreGroup = document.querySelector<HTMLDetailsElement>('.site-nav__group');
+
+  if (toggle && navigation) {
+    const closeMenu = () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      navigation.dataset.open = 'false';
+      exploreGroup?.removeAttribute('open');
+    };
+
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
+      navigation.dataset.open = String(!isOpen);
+      if (isOpen) exploreGroup?.removeAttribute('open');
+    });
+
+    navigation.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) closeMenu();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && navigation.dataset.open === 'true') {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 901px)').matches) closeMenu();
+    });
+  }
+</script>

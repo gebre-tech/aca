@@ -1,0 +1,137 @@
+---
+interface Props {
+  steps: readonly string[];
+  label: string;
+}
+
+const { steps, label } = Astro.props;
+---
+
+<div class="loop-flow" role="group" aria-label={label}>
+  <svg class="loop-flow__arrows" viewBox="0 0 1200 560" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <marker id="loop-flow-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+      </marker>
+    </defs>
+    <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#loop-flow-arrow)">
+      <path d="M 395 127 H 423" />
+      <path d="M 805 127 H 833" />
+      <path d="M 983 232 V 330" />
+      <path d="M 861 433 H 831" />
+      <path d="M 450 433 H 395" />
+      <path d="M 39 433 H 10 C 2 433 2 127 10 127 H 35" />
+    </g>
+  </svg>
+  <ol class="loop-flow__steps">
+    {steps.map((step) => <li class="loop-flow__step"><span>{step}</span></li>)}
+  </ol>
+</div>
+
+<style>
+  .loop-flow {
+    position: relative;
+    color: var(--color-forest-800);
+  }
+
+  .loop-flow__arrows {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2.5rem 0;
+    pointer-events: none;
+  }
+
+  .loop-flow__steps {
+    position: relative;
+    display: grid;
+    min-height: 35rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: 1.75rem;
+    margin: 0;
+    padding: 2rem 2.5rem;
+    list-style: none;
+  }
+
+  .loop-flow__step {
+    display: flex;
+    min-height: 11rem;
+    align-items: center;
+    border: 1px solid var(--color-line);
+    border-top: 3px solid var(--color-forest-900);
+    border-radius: 0.55rem;
+    background: var(--color-white);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-card);
+    color: var(--color-charcoal);
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .loop-flow__step:nth-child(3n + 2) {
+    border-top-color: var(--color-ochre-800);
+  }
+
+  .loop-flow__step:nth-child(4) {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .loop-flow__step:nth-child(5) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .loop-flow__step:nth-child(6) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  @media (max-width: 760px) {
+    .loop-flow__arrows {
+      display: none;
+    }
+
+    .loop-flow__steps {
+      min-height: 0;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      gap: 0;
+      padding: 0;
+    }
+
+    .loop-flow__step,
+    .loop-flow__step:nth-child(4),
+    .loop-flow__step:nth-child(5),
+    .loop-flow__step:nth-child(6) {
+      position: relative;
+      grid-column: 1;
+      grid-row: auto;
+      min-height: 6rem;
+      margin-bottom: 1.5rem;
+      margin-left: 1.2rem;
+      padding-left: 1.3rem;
+    }
+
+    .loop-flow__step::before {
+      position: absolute;
+      top: calc(100% + 1px);
+      left: 1.1rem;
+      width: 2px;
+      height: 1.5rem;
+      background: var(--color-forest-700);
+      content: '';
+    }
+
+    .loop-flow__step:last-child {
+      margin-bottom: 0;
+    }
+
+    .loop-flow__step:last-child::before {
+      display: none;
+    }
+  }
+</style>

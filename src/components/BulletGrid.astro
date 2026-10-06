@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  items: readonly string[];
+  label: string;
+}
+
+const { items, label } = Astro.props;
+---
+
+<ul class="bullet-grid" aria-label={label}>
+  {items.map((item) => (
+    <li class="bullet-grid__item">
+      <span class="bullet-grid__mark"><Icon name="check" /></span>
+      <span>{item}</span>
+    </li>
+  ))}
+</ul>

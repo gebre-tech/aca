@@ -1,0 +1,1058 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BulletGrid from '../components/BulletGrid.astro';
+import Button from '../components/Button.astro';
+import Card from '../components/Card.astro';
+import Icon from '../components/Icon.astro';
+import IconCard from '../components/IconCard.astro';
+import PartnerCard from '../components/PartnerCard.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CTABanner from '../components/CTABanner.astro';
+import { about } from '../data/about';
+import { featuredProject } from '../data/featured-project';
+import { home } from '../data/home';
+import { projects } from '../data/projects';
+import { services } from '../data/services';
+import { digitalMrv } from '../data/digital-mrv';
+import { carbonFinance } from '../data/carbon-finance';
+import { businessModels } from '../data/business-models';
+import { partners } from '../data/partners';
+import { impact } from '../data/impact';
+import { whyUs } from '../data/why-us';
+import { cta } from '../data/cta';
+
+const areaIcons = ['energy', 'leaf', 'finance', 'data', 'climate'] as const;
+const impactIcons = ['energy', 'climate', 'leaf', 'energy', 'data', 'finance', 'leaf', 'climate', 'finance', 'data', 'climate'] as const;
+const partnerMonograms = ['MoA', 'MoPD', 'WSU', 'ILRI', 'WB', 'UNDP', 'UNEP'] as const;
+---
+
+<BaseLayout title="Africa Climate Actions PLC" description={home.document.description}>
+  <section id="home" class="home-hero" aria-labelledby="home-heading">
+    <div class="container home-hero__inner">
+      <div class="home-hero__content">
+        <p class="home-hero__eyebrow">{home.label}</p>
+        <h1 id="home-heading" class="home-hero__title">{home.heading}</h1>
+        <div class="home-hero__intro">
+          {home.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <div class="home-hero__actions">
+          <Button href="#services" icon="arrow">Explore Our Services</Button>
+          <Button href="/#contact" variant="outline">Contact Us</Button>
+        </div>
+      </div>
+      <div class="home-hero__visual" aria-hidden="true">
+        <div class="home-hero__orb home-hero__orb--outer"></div>
+        <div class="home-hero__orb home-hero__orb--middle"></div>
+        <div class="home-hero__orb home-hero__orb--inner"></div>
+        <div class="home-hero__visual-mark"><Icon name="climate" /></div>
+        <span class="home-hero__visual-label">Energy · Agriculture · Data</span>
+      </div>
+    </div>
+    <div class="home-hero__edge" aria-hidden="true"></div>
+  </section>
+
+  <Section id="core-areas" tone="muted" labelledBy="core-areas-heading">
+    <SectionHeading
+      id="core-areas-heading"
+      eyebrow={home.label}
+      title={home.areasHeading}
+    />
+    <div class="core-areas-grid">
+      {home.areas.map((area, index) => (
+        <IconCard
+          title={area.heading}
+          description={area.paragraphs[0]}
+          icon={areaIcons[index]}
+        />
+      ))}
+    </div>
+  </Section>
+
+  <Section id="about" tone="default" labelledBy="about-heading">
+    <SectionHeading
+      id="about-heading"
+      eyebrow={about.label}
+      title={about.heading}
+    />
+    <div class="about-intro">
+      {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+    <div class="about-pillars" aria-label={`${about.mission.heading} and ${about.vision.heading}`}>
+      <Card title={about.mission.heading} class="about-pillar about-pillar--mission">
+        <p>{about.mission.paragraph}</p>
+      </Card>
+      <Card title={about.vision.heading} class="about-pillar about-pillar--vision">
+        <p>{about.vision.paragraph}</p>
+      </Card>
+    </div>
+    <div class="how-we-work">
+      <h3 class="how-we-work__title">{about.howWeWork.heading}</h3>
+      <div class="how-we-work__paragraphs">
+        {about.howWeWork.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </Section>
+
+  <Section id="services" tone="muted" labelledBy="services-heading">
+    <SectionHeading
+      id="services-heading"
+      eyebrow={services.label}
+      title={services.heading}
+    />
+    <div class="services-grid">
+      {services.sections.map((service, index) => (
+        <Card
+          title={service.heading}
+          eyebrow={String(index + 1).padStart(2, '0')}
+          class={`service-card service-card--${index % 2 === 0 ? 'even' : 'odd'}`}
+          labelledBy={`service-heading-${index + 1}`}
+        >
+          {service.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </Card>
+      ))}
+    </div>
+    <div class="service-capabilities">
+      <SectionHeading
+        id="digital-mrv-capabilities-heading"
+        eyebrow={services.label}
+        title={services.capabilitiesHeading}
+      />
+      <BulletGrid items={services.capabilities} label={services.capabilitiesHeading} />
+    </div>
+  </Section>
+
+  <Section id="projects" tone="default" labelledBy="projects-heading">
+    <SectionHeading
+      id="projects-heading"
+      eyebrow={projects.label}
+      title={projects.heading}
+      intro={projects.paragraphs[0]}
+    />
+    <p class="projects-intro-secondary">{projects.paragraphs[1]}</p>
+    <Card
+      title={featuredProject.heading}
+      eyebrow={projects.label}
+      class="featured-project-teaser"
+    >
+      <p class="featured-project-teaser__location">{featuredProject.location}</p>
+      <p>{featuredProject.paragraphs[0]}</p>
+      <p>{featuredProject.paragraphs[1]}</p>
+      <Button href="/projects/biogas-forage-dairy/" icon="arrow">Featured Project</Button>
+    </Card>
+    <div class="project-themes">
+      <SectionHeading
+        eyebrow={projects.themesLabel}
+        title={projects.themesHeading}
+      />
+      <div class="project-themes__grid">
+        {projects.themes.map((theme, index) => (
+          <Card title={theme.heading} eyebrow={String(index + 1).padStart(2, '0')}>
+            {theme.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </Card>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <Section id="digital-mrv" tone="muted" labelledBy="digital-mrv-heading">
+    <SectionHeading
+      id="digital-mrv-heading"
+      eyebrow={digitalMrv.label}
+      title={digitalMrv.heading}
+      intro={digitalMrv.paragraphs[0]}
+    />
+    <p class="digital-mrv-intro-secondary">{digitalMrv.paragraphs[1]}</p>
+    <div class="digital-mrv-results">
+      <SectionHeading
+        id="digital-mrv-results-heading"
+        eyebrow={digitalMrv.label}
+        title={digitalMrv.fieldDataHeading}
+      />
+      <div class="digital-mrv-groups">
+        {[
+          { items: digitalMrv.capabilities.slice(0, 3), className: 'collect' },
+          { items: digitalMrv.capabilities.slice(3, 6), className: 'calculate' },
+          { items: digitalMrv.capabilities.slice(6, 9), className: 'verify' },
+          { items: digitalMrv.capabilities.slice(9, 12), className: 'report' },
+        ].map((group) => (
+          <div class={`digital-mrv-group digital-mrv-group--${group.className}`}>
+            <BulletGrid items={group.items} label={digitalMrv.fieldDataHeading} />
+          </div>
+        ))}
+      </div>
+    </div>
+    <Card
+      title={digitalMrv.nationalSystems.heading}
+      class="national-systems-callout"
+    >
+      <p>{digitalMrv.nationalSystems.paragraph}</p>
+    </Card>
+  </Section>
+
+  <Section id="carbon-finance" tone="default" labelledBy="carbon-finance-heading">
+    <SectionHeading
+      id="carbon-finance-heading"
+      eyebrow={carbonFinance.label}
+      title={carbonFinance.heading}
+      intro={carbonFinance.paragraphs[0]}
+    />
+    <p class="carbon-finance-services">{carbonFinance.paragraphs[1]}</p>
+    <Card
+      title={carbonFinance.beyondCarbonCredits.heading}
+      class="beyond-carbon-callout"
+    >
+      <p>{carbonFinance.beyondCarbonCredits.paragraph}</p>
+    </Card>
+  </Section>
+
+  <Section id="business-models" tone="muted" labelledBy="business-models-heading">
+    <SectionHeading
+      id="business-models-heading"
+      eyebrow={businessModels.label}
+      title={businessModels.heading}
+      intro={businessModels.paragraphs[0]}
+    />
+    <div class="business-models-areas">
+      <h3 class="business-models-areas__heading">{businessModels.areasHeading}</h3>
+      <ul class="business-models-chips" aria-label={businessModels.areasHeading}>
+        {businessModels.areas.map((area) => <li class="business-models-chips__item">{area}</li>)}
+      </ul>
+    </div>
+  </Section>
+
+  <Section id="partners" tone="default" labelledBy="partners-heading">
+    <SectionHeading
+      id="partners-heading"
+      eyebrow={partners.label}
+      title={partners.heading}
+      intro={partners.paragraphs[0]}
+    />
+    <p class="partners-intro-secondary">{partners.paragraphs[1]}</p>
+    <!-- Official partner logos require permission from each partner before use. -->
+    <div class="partners-grid">
+      {partners.table.rows.map((partner, index) => (
+        <PartnerCard
+          id={`partner-${index + 1}-heading`}
+          name={partner[0].replaceAll('**', '')}
+          focus={partner[1]}
+          monogram={partnerMonograms[index]}
+        />
+      ))}
+    </div>
+  </Section>
+
+  <Section id="impact" tone="muted" labelledBy="impact-heading">
+    <SectionHeading
+      id="impact-heading"
+      eyebrow={impact.label}
+      title={impact.heading}
+      intro={impact.paragraphs[0]}
+    />
+    <div class="impact-grid">
+      {impact.areas.map((area, index) => (
+        <IconCard
+          title={area}
+          icon={impactIcons[index]}
+          class="impact-grid__card"
+        />
+      ))}
+    </div>
+  </Section>
+
+  <Section id="why-us" tone="dark" labelledBy="why-us-heading">
+    <SectionHeading
+      id="why-us-heading"
+      eyebrow={whyUs.label}
+      title={whyUs.heading}
+    />
+    <div class="why-us-statement">
+      {whyUs.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </Section>
+
+  <Section id="contact" tone="default" labelledBy="contact-heading">
+    <SectionHeading
+      id="contact-heading"
+      eyebrow={cta.label}
+      title={cta.heading}
+      intro={cta.paragraphs[0]}
+    />
+    <p class="contact-intro-secondary">{cta.paragraphs[1]}</p>
+    <div class="contact-layout">
+      <form
+        class="contact-form"
+        action="/TODO-contact-endpoint"
+        method="post"
+      >
+        <!-- TODO: Replace the placeholder action with the production email/form endpoint. -->
+        <div class="contact-form__field">
+          <label for="contact-name">Name</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="contact-form__field">
+          <label for="contact-organization">Organization</label>
+          <input id="contact-organization" name="organization" type="text" autocomplete="organization" required />
+        </div>
+        <div class="contact-form__field">
+          <label for="contact-email">Email</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="contact-form__field">
+          <label for="contact-interest">Area of interest</label>
+          <select id="contact-interest" name="areaOfInterest" required>
+            <option value="" selected disabled>Select an area of interest</option>
+            <option value="renewable-energy">Renewable energy</option>
+            <option value="agriculture">Agriculture</option>
+            <option value="carbon-project">Carbon project</option>
+            <option value="ghg-data-system">GHG data system</option>
+            <option value="climate-investment">Climate investment</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="contact-form__field contact-form__field--full">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="5" required></textarea>
+        </div>
+        <div class="contact-form__actions">
+          <button class="button button--primary contact-form__submit" type="submit">Contact Our Team</button>
+        </div>
+      </form>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .home-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 83% 18%, rgb(165 92 19 / 12%), transparent 28rem),
+      linear-gradient(115deg, var(--color-paper) 0%, #f4f2e9 100%);
+  }
+
+  .home-hero__inner {
+    position: relative;
+    display: grid;
+    min-height: 36rem;
+    grid-template-columns: minmax(0, 1.15fr) minmax(17rem, 0.85fr);
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .home-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 50rem;
+  }
+
+  .home-hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0 0 1.25rem;
+    color: var(--color-ochre-800);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+  }
+
+  .home-hero__eyebrow::before {
+    width: 1.6rem;
+    height: 2px;
+    background: currentColor;
+    content: '';
+  }
+
+  .home-hero__title {
+    max-width: 48rem;
+    margin: 0;
+    color: var(--color-forest-950);
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6.8vw, 5.8rem);
+    font-weight: 700;
+    letter-spacing: -0.067em;
+    line-height: 1.01;
+  }
+
+  .home-hero__intro {
+    max-width: 46rem;
+    margin-top: 1.45rem;
+    color: var(--color-slate);
+    font-size: 1.02rem;
+    line-height: 1.75;
+  }
+
+  .home-hero__intro p {
+    margin: 0 0 0.85rem;
+  }
+
+  .home-hero__intro p:last-child {
+    margin-bottom: 0;
+  }
+
+  .home-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.7rem;
+  }
+
+  .home-hero__visual {
+    position: relative;
+    display: grid;
+    width: min(100%, 25rem);
+    aspect-ratio: 1;
+    place-items: center;
+    justify-self: center;
+    border: 1px solid rgb(23 75 58 / 12%);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 52% 48%, rgb(255 255 255 / 85%) 0 16%, transparent 16.5%),
+      repeating-radial-gradient(circle at 52% 48%, transparent 0 2.4rem, rgb(23 75 58 / 8%) 2.45rem 2.5rem),
+      radial-gradient(circle at 52% 48%, #e4ebe0, #f0ecdf 68%, #e8e5d9);
+    box-shadow:
+      0 0 0 1.25rem rgb(23 75 58 / 3%),
+      0 0 0 2.5rem rgb(23 75 58 / 2%);
+  }
+
+  .home-hero__orb {
+    position: absolute;
+    border: 1px solid rgb(23 75 58 / 30%);
+    border-radius: 50%;
+    transform: rotate(-28deg);
+  }
+
+  .home-hero__orb--outer {
+    width: 84%;
+    height: 44%;
+  }
+
+  .home-hero__orb--middle {
+    width: 68%;
+    height: 35%;
+    transform: rotate(48deg);
+  }
+
+  .home-hero__orb--inner {
+    width: 53%;
+    height: 27%;
+    border-color: rgb(128 69 7 / 38%);
+    transform: rotate(4deg);
+  }
+
+  .home-hero__visual-mark {
+    display: grid;
+    width: 5.25rem;
+    height: 5.25rem;
+    place-items: center;
+    border: 1px solid rgb(23 75 58 / 14%);
+    border-radius: 50%;
+    background: var(--color-white);
+    color: var(--color-forest-900);
+    box-shadow: var(--shadow-floating);
+  }
+
+  .home-hero__visual-mark svg {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .home-hero__visual-label {
+    position: absolute;
+    right: 1rem;
+    bottom: 9%;
+    border: 1px solid rgb(23 75 58 / 10%);
+    border-radius: 999px;
+    background: rgb(247 246 241 / 92%);
+    padding: 0.65rem 0.9rem;
+    color: var(--color-forest-950);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .home-hero__edge {
+    position: absolute;
+    right: -7rem;
+    bottom: -14rem;
+    width: 22rem;
+    height: 22rem;
+    border: 1px solid rgb(23 75 58 / 8%);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 2rem rgb(23 75 58 / 2%),
+      0 0 0 4rem rgb(23 75 58 / 1.5%);
+    pointer-events: none;
+  }
+
+  .core-areas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .about-intro {
+    display: grid;
+    max-width: 58rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 2rem;
+    color: var(--color-slate);
+    line-height: 1.75;
+  }
+
+  .about-intro p {
+    margin: 0 0 1.1rem;
+  }
+
+  .about-pillars {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .about-pillar {
+    position: relative;
+    overflow: hidden;
+    min-height: 13rem;
+    padding: clamp(1.5rem, 3vw, 2.3rem);
+  }
+
+  .about-pillar::after {
+    position: absolute;
+    right: -3.2rem;
+    bottom: -4.5rem;
+    width: 11rem;
+    height: 11rem;
+    border: 1px solid rgb(255 255 255 / 15%);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1.2rem rgb(255 255 255 / 4%);
+    content: '';
+    pointer-events: none;
+  }
+
+  .about-pillar--mission {
+    border-color: var(--color-forest-900);
+    background: var(--color-forest-900);
+    color: var(--color-white);
+  }
+
+  .about-pillar--vision {
+    border-color: var(--color-ochre-800);
+    background: var(--color-ochre-800);
+    color: var(--color-white);
+  }
+
+  .about-pillar .surface-card__title {
+    position: relative;
+    z-index: 1;
+    font-size: 1.4rem;
+  }
+
+  .about-pillar .surface-card__body {
+    position: relative;
+    z-index: 1;
+    max-width: 35rem;
+    color: #f2f5f2;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .how-we-work {
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.7fr) minmax(0, 1.3fr);
+    gap: 1.5rem 3rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    border-top: 1px solid var(--color-line);
+    padding-top: 2rem;
+  }
+
+  .how-we-work__title {
+    margin: 0;
+    color: var(--color-forest-950);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: -0.04em;
+  }
+
+  .how-we-work__paragraphs {
+    display: grid;
+    gap: 0.9rem;
+    color: var(--color-slate);
+    line-height: 1.7;
+  }
+
+  .how-we-work__paragraphs p {
+    margin: 0;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .service-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 100%;
+    padding-top: 1.35rem;
+  }
+
+  .service-card--even {
+    border-top: 3px solid var(--color-forest-900);
+  }
+
+  .service-card--odd {
+    border-top: 3px solid var(--color-ochre-800);
+  }
+
+  .service-card .surface-card__title {
+    position: relative;
+    z-index: 1;
+    min-height: 3.4rem;
+    font-size: 1.15rem;
+  }
+
+  .service-card__heading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .service-card__number {
+    color: var(--color-ochre-800);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .service-card .surface-card__body {
+    position: relative;
+    z-index: 1;
+    margin-top: 0.65rem;
+    line-height: 1.75;
+  }
+
+  .service-capabilities {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    border-top: 1px solid var(--color-line);
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .service-capabilities .section-heading {
+    margin-bottom: 2rem;
+  }
+
+  .projects-intro-secondary {
+    max-width: 48rem;
+    margin: -1.65rem 0 2rem;
+    color: var(--color-slate);
+    line-height: 1.75;
+  }
+
+  .featured-project-teaser {
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid var(--color-forest-900);
+    padding: clamp(1.5rem, 4vw, 2.6rem);
+  }
+
+  .featured-project-teaser::after {
+    position: absolute;
+    top: -5rem;
+    right: -3.5rem;
+    width: 15rem;
+    height: 15rem;
+    border: 1px solid rgb(23 75 58 / 10%);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 1.5rem rgb(23 75 58 / 3%),
+      0 0 0 3rem rgb(23 75 58 / 2%);
+    content: '';
+    pointer-events: none;
+  }
+
+  .featured-project-teaser > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .featured-project-teaser .surface-card__title {
+    max-width: 48rem;
+    font-size: clamp(1.45rem, 3vw, 2rem);
+  }
+
+  .featured-project-teaser__location {
+    margin: 0.65rem 0 0;
+    color: var(--color-ochre-800);
+    font-weight: 700;
+  }
+
+  .featured-project-teaser .button {
+    margin-top: 0.5rem;
+  }
+
+  .project-themes {
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .project-themes__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .project-themes__grid > :nth-child(odd) {
+    border-top: 3px solid var(--color-forest-900);
+  }
+
+  .project-themes__grid > :nth-child(even) {
+    border-top: 3px solid var(--color-ochre-800);
+  }
+
+  .digital-mrv-intro-secondary {
+    max-width: 47rem;
+    margin: -1.65rem 0 2.5rem;
+    color: var(--color-slate);
+    line-height: 1.75;
+  }
+
+  .digital-mrv-results {
+    border-top: 1px solid var(--color-line);
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .digital-mrv-results .section-heading {
+    margin-bottom: 2rem;
+  }
+
+  .digital-mrv-groups {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .digital-mrv-group {
+    border-left: 3px solid var(--color-forest-900);
+    padding-left: 1rem;
+  }
+
+  .digital-mrv-group--calculate {
+    border-left-color: var(--color-ochre-800);
+  }
+
+  .digital-mrv-group--verify {
+    border-left-color: var(--color-forest-700);
+  }
+
+  .digital-mrv-group--report {
+    border-left-color: var(--color-ochre-600);
+  }
+
+  .digital-mrv-group .bullet-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .national-systems-callout {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    border-left: 4px solid var(--color-forest-900);
+    background: var(--color-white);
+  }
+
+  .national-systems-callout .surface-card__title {
+    font-size: 1.45rem;
+  }
+
+  .carbon-finance-services {
+    max-width: 52rem;
+    margin: -1.65rem 0 2rem;
+    color: var(--color-slate);
+    line-height: 1.75;
+  }
+
+  .beyond-carbon-callout {
+    border-left: 4px solid var(--color-ochre-800);
+    background: #f0eadb;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .beyond-carbon-callout .surface-card__title {
+    color: var(--color-forest-950);
+    font-size: 1.45rem;
+  }
+
+  .business-models-areas {
+    border-top: 1px solid var(--color-line);
+    padding-top: 1.75rem;
+  }
+
+  .business-models-areas__heading {
+    margin: 0 0 1.1rem;
+    color: var(--color-forest-950);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+
+  .business-models-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .business-models-chips__item {
+    border: 1px solid #bdcec1;
+    border-radius: 999px;
+    background: var(--color-white);
+    padding: 0.7rem 1rem;
+    color: var(--color-forest-950);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .partners-intro-secondary,
+  .contact-intro-secondary {
+    max-width: 48rem;
+    margin: -1.65rem 0 2rem;
+    color: var(--color-slate);
+    line-height: 1.75;
+  }
+
+  .partners-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .impact-grid__card .surface-card__title {
+    font-size: 1.05rem;
+  }
+
+  .section--dark .section-heading__title {
+    max-width: 52rem;
+  }
+
+  .why-us-statement {
+    max-width: 57rem;
+    border-left: 3px solid #f2c47e;
+    padding-left: clamp(1.25rem, 4vw, 2.5rem);
+    color: #e3ece6;
+    font-size: clamp(1.08rem, 2vw, 1.35rem);
+    line-height: 1.8;
+  }
+
+  .why-us-statement p {
+    margin: 0 0 1.1rem;
+  }
+
+  .why-us-statement p:last-child {
+    margin-bottom: 0;
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-size: 1.15em;
+    font-weight: 700;
+  }
+
+  .contact-layout {
+    max-width: 54rem;
+  }
+
+  .contact-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.65rem;
+    background: var(--color-white);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    box-shadow: var(--shadow-card);
+  }
+
+  .contact-form__field {
+    display: grid;
+    align-content: start;
+    gap: 0.45rem;
+  }
+
+  .contact-form__field--full,
+  .contact-form__actions {
+    grid-column: 1 / -1;
+  }
+
+  .contact-form__field label {
+    color: var(--color-charcoal);
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  .contact-form__field input,
+  .contact-form__field select,
+  .contact-form__field textarea {
+    width: 100%;
+    min-height: 3rem;
+    border: 1px solid #aab7ad;
+    border-radius: 0.35rem;
+    background: var(--color-white);
+    padding: 0.7rem 0.8rem;
+    color: var(--color-charcoal);
+    font: inherit;
+  }
+
+  .contact-form__field textarea {
+    min-height: 8rem;
+    resize: vertical;
+  }
+
+  .contact-form__field input:focus-visible,
+  .contact-form__field select:focus-visible,
+  .contact-form__field textarea:focus-visible {
+    outline: 3px solid var(--color-ochre-600);
+    outline-offset: 2px;
+  }
+
+  .contact-form__actions {
+    display: flex;
+  }
+
+  .contact-form__submit {
+    cursor: pointer;
+  }
+
+  @media (min-width: 1050px) {
+    .core-areas-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .core-areas-grid > * {
+      grid-column: span 2;
+    }
+
+    .core-areas-grid > :nth-child(4) {
+      grid-column: 2 / span 2;
+    }
+
+    .core-areas-grid > :nth-child(5) {
+      grid-column: 4 / span 2;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .home-hero__inner {
+      min-height: auto;
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.7fr);
+      gap: 2rem;
+    }
+
+    .home-hero__visual {
+      width: min(100%, 19rem);
+    }
+
+    .core-areas-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .core-areas-grid > * {
+      grid-column: span 2;
+    }
+
+    .core-areas-grid > :nth-child(5) {
+      grid-column: 2 / span 2;
+    }
+
+    .about-intro {
+      gap: 0 1.25rem;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .home-hero__inner {
+      grid-template-columns: 1fr;
+      padding-block: 4rem 3.5rem;
+    }
+
+    .home-hero__visual {
+      width: min(70vw, 17rem);
+      margin-block: 0.5rem 0.75rem;
+    }
+
+    .home-hero__visual-label {
+      right: -0.8rem;
+    }
+
+    .core-areas-grid,
+    .about-intro,
+    .about-pillars,
+    .how-we-work,
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .project-themes__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .partners-grid,
+    .impact-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .digital-mrv-group .bullet-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .core-areas-grid > * {
+      grid-column: auto;
+    }
+
+    .about-intro {
+      gap: 0;
+    }
+
+    .about-pillars {
+      gap: 0.8rem;
+    }
+
+    .about-pillar {
+      min-height: 0;
+    }
+
+    .how-we-work {
+      gap: 1rem;
+    }
+
+    .service-card .surface-card__title {
+      min-height: 0;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .partners-grid,
+    .impact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form__field--full,
+    .contact-form__actions {
+      grid-column: auto;
+    }
+  }
+</style>

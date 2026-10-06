@@ -1,0 +1,12 @@
+---
+interface Props {
+  steps: readonly string[];
+  label: string;
+}
+
+const { steps, label } = Astro.props;
+---
+
+<ol class="process-flow" aria-label={label}>
+  {steps.map((step) => <li class="process-flow__step"><span class="process-flow__text">{step}</span></li>)}
+</ol>

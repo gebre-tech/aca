@@ -1,0 +1,18 @@
+---
+interface Props {
+  title?: string;
+  eyebrow?: string;
+  class?: string;
+  labelledBy?: string;
+}
+
+const { title, eyebrow, class: className, labelledBy } = Astro.props;
+---
+
+<article class:list={['surface-card', className]} aria-labelledby={labelledBy}>
+  {eyebrow && <p class="surface-card__eyebrow">{eyebrow}</p>}
+  {title && <h3 id={labelledBy} class="surface-card__title">{title}</h3>}
+  <div class="surface-card__body">
+    <slot />
+  </div>
+</article>

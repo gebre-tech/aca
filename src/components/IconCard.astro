@@ -1,0 +1,24 @@
+---
+import Icon from './Icon.astro';
+
+type IconName = 'climate' | 'data' | 'energy' | 'finance' | 'leaf';
+
+interface Props {
+  title: string;
+  icon: IconName;
+  description?: string;
+  eyebrow?: string;
+}
+
+const { title, icon, description, eyebrow } = Astro.props;
+---
+
+<article class="surface-card icon-card">
+  <span class="icon-card__icon"><Icon name={icon} /></span>
+  {eyebrow && <p class="surface-card__eyebrow">{eyebrow}</p>}
+  <h3 class="surface-card__title">{title}</h3>
+  <div class="surface-card__body">
+    {description && <p>{description}</p>}
+    <slot />
+  </div>
+</article>

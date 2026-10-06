@@ -1,0 +1,50 @@
+---
+import Button from './Button.astro';
+
+interface Action {
+  label: string;
+  href: string;
+  variant?: 'primary' | 'accent' | 'outline' | 'light';
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  text: string;
+  actions: Action[];
+  id?: string;
+}
+
+const { eyebrow, title, text, actions, id } = Astro.props;
+---
+
+<aside id={id} class="cta-banner" aria-labelledby={`${id ?? 'cta'}-title`}>
+  <div class="cta-banner__content">
+    <p class="section-heading__eyebrow">{eyebrow}</p>
+    <h2 id={`${id ?? 'cta'}-title`} class="cta-banner__title">{title}</h2>
+    <p class="cta-banner__text">{text}</p>
+    <div class="cta-banner__actions">
+      {actions.map((action, index) => (
+        <Button
+          href={action.href}
+          variant={action.variant ?? (index === 0 ? 'light' : 'outline')}
+          class={action.variant === 'outline' || (!action.variant && index !== 0) ? 'cta-banner__secondary' : ''}
+        >
+          {action.label}
+        </Button>
+      ))}
+    </div>
+  </div>
+</aside>
+
+<style>
+  .cta-banner__secondary {
+    border-color: rgb(255 255 255 / 55%);
+    color: white;
+  }
+
+  .cta-banner__secondary:hover {
+    background: white;
+    color: var(--color-forest-950);
+  }
+</style>

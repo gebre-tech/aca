@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BulletGrid from '../components/BulletGrid.astro';
+import Button from '../components/Button.astro';
+import Card from '../components/Card.astro';
+import CTABanner from '../components/CTABanner.astro';
+import IconCard from '../components/IconCard.astro';
+import PartnerCard from '../components/PartnerCard.astro';
+import ProcessFlow from '../components/ProcessFlow.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { home } from '../data/home';
+import { about } from '../data/about';
+import { cta } from '../data/cta';
+import { digitalMrv } from '../data/digital-mrv';
+import { featuredProject } from '../data/featured-project';
+import { impact } from '../data/impact';
+import { partners } from '../data/partners';
+---
+
+<BaseLayout
+  title="Design system preview | Africa Climate Actions PLC"
+  description="Design system and component preview for Africa Climate Actions PLC."
+>
+  <section class="preview-intro" aria-labelledby="preview-title">
+    <div class="container preview-intro__inner">
+      <p class="preview-intro__eyebrow">Africa Climate Actions PLC · Design system preview</p>
+      <h1 id="preview-title" class="preview-intro__title">{home.heading}</h1>
+      <p class="preview-intro__text">{home.paragraphs[0]}</p>
+      <div class="cta-banner__actions preview-intro__actions">
+        <Button href="#component-sections" icon="arrow">Explore components</Button>
+        <Button href="#palette" variant="outline">View the palette</Button>
+      </div>
+    </div>
+  </section>
+
+  <Section id="palette" tone="muted" labelledBy="palette-heading">
+    <SectionHeading
+      id="palette-heading"
+      eyebrow="Foundations"
+      title="Color tokens"
+      intro={home.paragraphs[2]}
+    />
+    <div class="swatch-grid" aria-label="Color palette">
+      <div class="swatch swatch--forest">Deep green · #174B3A</div>
+      <div class="swatch swatch--ochre">Warm ochre · #804507</div>
+      <div class="swatch swatch--paper">Off-white · #F7F6F1</div>
+      <div class="swatch swatch--charcoal">Charcoal · #202923</div>
+    </div>
+    <p class="preview-callout">
+      Primary button text on forest: 10.0:1. Ochre text on off-white: 7.0:1. Charcoal on off-white: 13.8:1.
+      All combinations exceed WCAG AA contrast for normal text.
+    </p>
+  </Section>
+
+  <Section tone="default" labelledBy="type-heading">
+    <SectionHeading
+      id="type-heading"
+      eyebrow="Typography"
+      title="Type styles"
+      intro={about.howWeWork.paragraphs[0]}
+    />
+    <div class="type-sample">
+      <Card eyebrow="Manrope · Heading font">
+        <span class="type-sample__heading">{home.heading}</span>
+      </Card>
+      <Card eyebrow="DM Sans · Body font">
+        <span class="type-sample__body">{about.howWeWork.paragraphs[0]}</span>
+      </Card>
+    </div>
+  </Section>
+
+  <Section id="component-sections" tone="muted" labelledBy="sections-heading">
+    <SectionHeading
+      id="sections-heading"
+      eyebrow="Layout"
+      title="Section wrapper and section heading"
+      intro={about.howWeWork.paragraphs[1]}
+    />
+    <Card title={about.howWeWork.heading} eyebrow="Card">
+      <p>{about.howWeWork.paragraphs[0]}</p>
+    </Card>
+  </Section>
+
+  <Section tone="default" labelledBy="buttons-heading">
+    <SectionHeading
+      id="buttons-heading"
+      eyebrow="Actions"
+      title="Button variants"
+    />
+    <div class="cta-banner__actions">
+      <Button href="#contact" icon="arrow">{cta.actions[0]}</Button>
+      <Button href="#contact" variant="accent">{cta.actions[1]}</Button>
+      <Button href="#contact" variant="outline">{cta.actions[2]}</Button>
+      <Button href="#contact" variant="light">{cta.actions[3]}</Button>
+    </div>
+  </Section>
+
+  <Section tone="muted" labelledBy="cards-heading">
+    <SectionHeading
+      id="cards-heading"
+      eyebrow="Content components"
+      title={home.areasHeading}
+      intro={home.paragraphs[2]}
+    />
+    <div class="component-grid">
+      {home.areas.slice(0, 3).map((area, index) => (
+        <IconCard
+          title={area.heading}
+          description={area.paragraphs[0]}
+          icon={index === 0 ? 'energy' : index === 1 ? 'leaf' : 'finance'}
+          eyebrow="Our Core Areas"
+        />
+      ))}
+      <Card title={home.areas[3].heading} eyebrow="Digital climate data">
+        <p>{home.areas[3].paragraphs[0]}</p>
+      </Card>
+    </div>
+  </Section>
+
+  <Section tone="default" labelledBy="bullets-heading">
+    <SectionHeading
+      id="bullets-heading"
+      eyebrow="Long lists"
+      title={impact.areasHeading}
+      intro={impact.paragraphs[0]}
+    />
+    <BulletGrid items={impact.areas} label={impact.areasHeading} />
+  </Section>
+
+  <Section tone="muted" labelledBy="process-heading">
+    <SectionHeading
+      id="process-heading"
+      eyebrow="Project process"
+      title={featuredProject.circularSystem.heading}
+      intro={featuredProject.energyAndFood.introduction}
+    />
+    <ProcessFlow steps={featuredProject.circularSystem.bullets} label={featuredProject.circularSystem.heading} />
+  </Section>
+
+  <Section tone="default" labelledBy="partners-heading">
+    <SectionHeading
+      id="partners-heading"
+      eyebrow="Partnerships"
+      title={partners.heading}
+      intro={partners.paragraphs[0]}
+    />
+    <div class="component-grid">
+      {partners.table.rows.slice(0, 3).map((partner) => (
+        <PartnerCard name={partner[0].replaceAll('**', '')} focus={partner[1]} />
+      ))}
+    </div>
+  </Section>
+
+  <Section tone="muted" labelledBy="mrv-heading">
+    <SectionHeading
+      id="mrv-heading"
+      eyebrow={digitalMrv.label}
+      title={digitalMrv.fieldDataHeading}
+      intro={digitalMrv.paragraphs[0]}
+    />
+    <BulletGrid items={digitalMrv.capabilities} label={digitalMrv.fieldDataHeading} />
+  </Section>
+
+  <Section id="contact" tone="default" labelledBy="cta-preview-heading">
+    <SectionHeading
+      id="cta-preview-heading"
+      eyebrow="Conversion component"
+      title={cta.label}
+    />
+    <CTABanner
+      id="preview-contact-banner"
+      eyebrow={cta.label}
+      title={cta.heading}
+      text={cta.paragraphs[1]}
+      actions={cta.actions.map((action, index) => ({
+        label: action,
+        href: '#component-sections',
+        variant: index === 0 ? 'light' : 'outline',
+      }))}
+    />
+  </Section>
+</BaseLayout>

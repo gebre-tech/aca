@@ -1,0 +1,232 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BulletGrid from '../../components/BulletGrid.astro';
+import Button from '../../components/Button.astro';
+import Card from '../../components/Card.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import LoopFlow from '../../components/LoopFlow.astro';
+import Section from '../../components/Section.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { cta } from '../../data/cta';
+import { featuredProject } from '../../data/featured-project';
+---
+
+<BaseLayout
+  title={`${featuredProject.heading} | Africa Climate Actions PLC`}
+  description={featuredProject.paragraphs[0]}
+>
+  <section class="project-hero" aria-labelledby="project-heading">
+    <div class="container project-hero__inner">
+      <a class="project-back-link" href="/#projects">Projects</a>
+      <p class="project-hero__eyebrow">{featuredProject.label}</p>
+      <h1 id="project-heading" class="project-hero__title">{featuredProject.heading}</h1>
+      <p class="project-hero__location">{featuredProject.location}</p>
+      <div class="project-hero__intro">
+        {featuredProject.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+    <div class="project-hero__pattern" aria-hidden="true"></div>
+  </section>
+
+  <Section id="circular-system" tone="muted" labelledBy="circular-system-heading">
+    <SectionHeading
+      id="circular-system-heading"
+      eyebrow={featuredProject.label}
+      title={featuredProject.circularSystem.heading}
+    />
+    <LoopFlow steps={featuredProject.circularSystem.bullets} label={featuredProject.circularSystem.heading} />
+  </Section>
+
+  <Section tone="default" labelledBy="manure-to-energy-heading">
+    <div class="project-feature-grid">
+      <Card
+        title={featuredProject.manureToEnergy.heading}
+        class="project-feature-card"
+        labelledBy="manure-to-energy-heading"
+      >
+        <p>{featuredProject.manureToEnergy.paragraph}</p>
+      </Card>
+      <Card title={featuredProject.digestateToAgriculture.heading} class="project-feature-card">
+        <p>{featuredProject.digestateToAgriculture.paragraph}</p>
+      </Card>
+    </div>
+  </Section>
+
+  <Section tone="muted" labelledBy="benefits-heading">
+    <SectionHeading
+      id="benefits-heading"
+      eyebrow={featuredProject.label}
+      title={featuredProject.energyAndFood.heading}
+      intro={featuredProject.energyAndFood.introduction}
+    />
+    <BulletGrid
+      items={featuredProject.energyAndFood.benefits}
+      label={featuredProject.energyAndFood.heading}
+    />
+  </Section>
+
+  <Section tone="default" labelledBy="circular-agriculture-heading">
+    <Card
+      title={featuredProject.circularAgriculture.heading}
+      class="circular-agriculture-card"
+      labelledBy="circular-agriculture-heading"
+    >
+      <p>{featuredProject.circularAgriculture.paragraph}</p>
+    </Card>
+    <div class="project-cta">
+      <CTABanner
+        id="project-contact"
+        eyebrow={cta.label}
+        title={cta.heading}
+        text={cta.paragraphs[1]}
+        actions={cta.actions.map((action, index) => ({
+          label: action,
+          href: index === 3 ? '#project-contact' : '/#projects',
+          variant: index === 0 ? 'light' : 'outline',
+        }))}
+      />
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .project-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 90% 12%, rgb(165 92 19 / 13%), transparent 25rem),
+      linear-gradient(125deg, var(--color-paper), #eeece3);
+  }
+
+  .project-hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(3.5rem, 8vw, 6.5rem);
+  }
+
+  .project-back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 2.75rem;
+    color: var(--color-forest-900);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.25rem;
+  }
+
+  .project-back-link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .project-back-link::before {
+    margin-right: 0.55rem;
+    content: '←';
+  }
+
+  .project-hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0 0 1rem;
+    color: var(--color-ochre-800);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+  }
+
+  .project-hero__eyebrow::before {
+    width: 1.6rem;
+    height: 2px;
+    background: currentColor;
+    content: '';
+  }
+
+  .project-hero__title {
+    max-width: 58rem;
+    margin: 0;
+    color: var(--color-forest-950);
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: -0.065em;
+    line-height: 1.05;
+  }
+
+  .project-hero__location {
+    margin: 1.15rem 0 0;
+    color: var(--color-ochre-800);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .project-hero__intro {
+    max-width: 49rem;
+    margin-top: 1.35rem;
+    color: var(--color-slate);
+    font-size: 1.02rem;
+    line-height: 1.75;
+  }
+
+  .project-hero__intro p {
+    margin: 0 0 0.8rem;
+  }
+
+  .project-hero__intro p:last-child {
+    margin-bottom: 0;
+  }
+
+  .project-hero__pattern {
+    position: absolute;
+    right: -7rem;
+    bottom: -19rem;
+    width: 34rem;
+    height: 34rem;
+    border: 1px solid rgb(23 75 58 / 10%);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 2rem rgb(23 75 58 / 3%),
+      0 0 0 4rem rgb(23 75 58 / 2%),
+      0 0 0 6rem rgb(23 75 58 / 1.5%);
+  }
+
+  .project-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .project-feature-card {
+    border-top: 3px solid var(--color-forest-900);
+  }
+
+  .project-feature-card:nth-child(2) {
+    border-top-color: var(--color-ochre-800);
+  }
+
+  .circular-agriculture-card {
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid var(--color-forest-900);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .circular-agriculture-card .surface-card__title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .circular-agriculture-card .surface-card__body {
+    max-width: 55rem;
+    font-size: 1.05rem;
+  }
+
+  .project-cta {
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  @media (max-width: 680px) {
+    .project-feature-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

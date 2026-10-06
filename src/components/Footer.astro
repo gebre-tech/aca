@@ -1,0 +1,46 @@
+---
+import { cta } from '../data/cta';
+import Icon from './Icon.astro';
+
+const links = [
+  { label: 'Home', href: '/#home' },
+  { label: 'About Us', href: '/#about' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Projects', href: '/#projects' },
+  { label: 'Featured Project', href: '/projects/biogas-forage-dairy/' },
+  { label: 'Digital MRV', href: '/#digital-mrv' },
+  { label: 'Carbon Markets and Climate Finance', href: '/#carbon-finance' },
+  { label: 'Climate Business Models', href: '/#business-models' },
+  { label: 'Partners', href: '/#partners' },
+  { label: 'Impact', href: '/#impact' },
+  { label: 'Why Africa Climate Actions', href: '/#why-us' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__main">
+    <div>
+      <a class="brand" href="/#home" aria-label="Africa Climate Actions PLC home">
+        <span class="brand__mark"><Icon name="climate" /></span>
+        <span class="brand__text">{cta.footer.company}</span>
+      </a>
+      <p class="site-footer__statement">{cta.footer.statement}</p>
+      <!-- TODO: Replace placeholder contact details with verified company contact information. -->
+      <address class="site-footer__contact">
+        <span>Email: <strong>[TODO: official email address]</strong></span>
+        <span>Telephone: <strong>[TODO: official telephone number]</strong></span>
+        <span>Address: <strong>[TODO: office address]</strong></span>
+      </address>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer navigation">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <div class="container site-footer__bottom-inner">
+      <span>{cta.footer.focusAreas}</span>
+      <span>{cta.footer.attribution}</span>
+    </div>
+  </div>
+</footer>
